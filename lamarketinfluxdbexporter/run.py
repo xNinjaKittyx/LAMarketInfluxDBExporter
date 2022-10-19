@@ -10,6 +10,7 @@ import os
 import pathlib
 import time
 from logging.handlers import RotatingFileHandler
+from zoneinfo import ZoneInfo
 
 import requests
 import urllib3
@@ -39,39 +40,27 @@ NA_WEST_LOST_MARKET_API = "https://www.lostarkmarket.online/api/export-item-hist
 
 ITEMS = [
     "basic-oreha-fusion-material-2",
-    "caldarr-fusion-material-2",
-    "destruction-stone-0",
     "crystallized-destruction-stone-0",
-    "destruction-stone-fragment-0",
-    "great-honor-leapstone-2",
-    "guardian-stone-0",
     "crystallized-guardian-stone-0",
-    "guardian-stone-fragment-0",
-    "harmony-leapstone-2",
-    "harmony-shard-pouch-l-3",
-    "harmony-shard-pouch-m-2",
-    "harmony-shard-pouch-s-1",
+    "great-honor-leapstone-2",
     "honor-leapstone-2",
     "honor-shard-pouch-l-3",
     "honor-shard-pouch-m-2",
     "honor-shard-pouch-s-1",
-    "life-leapstone-2",
-    "life-shard-pouch-l-3",
-    "life-shard-pouch-m-2",
-    "life-shard-pouch-s-1",
-    "metallurgy-basic-casting-3",
-    "metallurgy-basic-folding-3",
     "metallurgy-basic-welding-3",
-    "moon-s-breath-3",
+    "metallurgy-applied-welding-4",
     "powder-of-sage-3",
     "simple-oreha-fusion-material-1",
     "solar-blessing-2",
     "solar-grace-1",
     "solar-protection-3",
-    "star-s-breath-3",
-    "tailoring-basic-design-3",
-    "tailoring-basic-knots-3",
     "tailoring-basic-mending-3",
+    "tailoring-applied-mending-4",
+    "fish-0",
+    "oreha-solar-carp-2",
+    "natural-pearl-1",
+    "blue-crystal-0",
+    "royal-crystal-0",
 ]
 
 
@@ -139,7 +128,7 @@ if __name__ == "__main__":
                     "tags": {
                         "item": item,
                     },
-                    "time": datetime.datetime.fromtimestamp(value["timestamp"] / 1000.0),
+                    "time": datetime.datetime.fromtimestamp(value["timestamp"] / 1000.0, tz=ZoneInfo("America/Los_Angeles")).isoformat(),
                     "fields": {field_key: normalize_numbers(value[field_key]) for field_key in fields},
                 }
             )
